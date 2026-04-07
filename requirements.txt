@@ -1,0 +1,15 @@
+polars==1.39.3
+duckdb==1.5.1
+pandas==3.0.2
+nba_api==1.11.4
+requests==2.33.1
+beautifulsoup4==4.14.3
+lxml==6.0.2
+rapidfuzz==3.14.5
+matplotlib==3.10.8
+seaborn==0.13.2
+jupyter==1.1.1
+ipykernel==7.2.0
+pyarrow==23.0.1
+tqdm==4.67.3
+statsmodels==0.14.6
