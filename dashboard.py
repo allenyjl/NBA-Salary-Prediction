@@ -308,10 +308,10 @@ EDA_FINDINGS = {
     "salary_dist": "NBA salaries are highly right-skewed — a small number of max-contract players earn dramatically more than the median. Log-transforming salary reveals a roughly normal distribution, which is why LOG_SALARY is used as the regression target.",
     "salary_pos": "Centers and Power Forwards tend to earn higher median salaries, reflecting the premium placed on frontcourt size. Point Guards show the widest spread, from minimum-wage rookies to max-contract stars.",
     "age_salary": "Salary peaks around ages 27–30, consistent with players reaching their prime. Rookies cluster near the league minimum, and salaries generally decline after age 32 as production drops off.",
-    "perf_salary": "Points per 36 minutes shows the strongest positive correlation with salary (r ≈ 0.62). Rebounds and assists are also positively correlated but weaker — scoring drives contracts more than other stats.",
+    "perf_salary": "Points per 36 minutes shows the strongest positive correlation with salary (r ≈ 0.58). Rebounds and assists are also positively correlated but weaker — scoring drives contracts more than other stats.",
     "season_trends": "Both mean and median NBA salaries have risen steadily from 2020–21 to 2024–25, reflecting the growing salary cap driven by TV deal revenues. The gap between mean and median widens each year, indicating increasing inequality.",
     "corr": "USAGE_PROXY and PTS_PER36 are the most correlated features with SEASON_SALARY. TOV_PER36 is negatively correlated once usage is controlled. Many per-36 stats are highly intercorrelated, motivating PCA for dimensionality reduction.",
-    "reddit": "Players with more Reddit post mentions tend to earn higher salaries — high-profile stars attract both attention and big contracts. Sentiment alone is a weak predictor, but combined with performance stats it marginally improves model accuracy.",
+    "reddit": "Players with more Reddit post mentions tend to earn higher salaries — high-profile stars attract both attention and big contracts. Sentiment alone is a weak predictor, and adding Reddit features to the model actually slightly hurts OLS regression (ΔR² = −0.015) while providing negligible benefit to the Random Forest (+0.003 accuracy). Reddit volume correlates with salary, but the signal is largely redundant with performance stats.",
 }
 
 tab2 = dbc.Container([
@@ -412,9 +412,9 @@ tab3 = dbc.Container([
         dbc.Col([
             html.H4("Modeling Results", className="mt-3 mb-0"),
             html.P(
-                "Performance stats explain ~42% of salary variance (R²=0.42). "
+                "Performance stats explain ~42% of salary variance (R²=0.42, held-out test set). "
                 "Random Forest achieves 62% accuracy on 4-class tier prediction. "
-                "Best scores highlighted in green.",
+                "Scores from notebook models (24 features, 80/20 split). Best scores highlighted in green.",
                 className="text-muted small mb-3",
             ),
             dbc.Row([
@@ -541,8 +541,11 @@ tab4 = dbc.Container([
                           config={"displayModeBar": False}),
             ]), className="mb-3"),
             html.P([
-                "Salary estimated via log-salary regression (R²=0.42 on test set). ",
-                "Tier probabilities from Random Forest. Treat as estimates, not guarantees.",
+                "Salary estimated via log-salary regression. ",
+                "Tier probabilities from Random Forest. ",
+                "Note: the predictor's models are trained on all data (no holdout); "
+                "the R²=0.42 / 62% accuracy figures in the Modeling tab are from "
+                "notebook models using a held-out test set and a larger feature set.",
             ], className="text-muted small mt-2"),
         ], width=7),
     ])
