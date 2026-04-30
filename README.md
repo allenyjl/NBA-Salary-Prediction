@@ -4,6 +4,9 @@
 
 A full end-to-end data science pipeline that predicts NBA player salaries from five seasons (2020–21 through 2024–25) of game-log performance stats, player bio data, and Reddit sentiment. The project covers data collection, wrangling, exploratory analysis, supervised and unsupervised modeling, and an interactive Plotly Dash dashboard.
 
+Demo: https://youtu.be/bPzH091zooc
+Presentation: https://youtu.be/I740IYyZtuI
+
 ---
 
 ## Table of Contents
